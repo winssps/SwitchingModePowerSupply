@@ -35,6 +35,7 @@ void LcdSt7565_Write(uchar cmd,at,dat)
 void Lcd12864_Init()
 {
 	uchar i;
+	P4SW = 0X70;
 	LCD12864_RSET = 0;
 	for (i=0; i<100; i++);
 	LCD12864_CS = 0;
