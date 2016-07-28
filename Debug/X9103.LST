@@ -1,0 +1,127 @@
+C51 COMPILER V9.00   X9103                                                                 07/19/2016 12:01:24 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE X9103
+OBJECT MODULE PLACED IN X9103.OBJ
+COMPILER INVOKED BY: E:\Keil\C51\Bin\C51.exe X9103.c DB OE INCDIR(E:\Keil\C51\INC;E:\Keil\C51\INC)
+
+line level    source
+
+   1          #define _X9103_C_
+   2          #include "reg52.h"
+   3          #include "x9103.h"
+   4          #include"intrins.h"
+   5          
+   6          #define uchar unsigned char
+   7          #define uint unsigned int
+   8          
+   9          sbit X9C103_CS = P1^0;
+  10          sbit X9C102_CS = P1^1;
+  11          sbit X9C103_INC = P1^2;
+  12          sbit X9C103_UD = P1^3;
+  13          
+  14          
+  15          sbit sw1 = P2^0;
+  16          sbit sw2 = P2^1;
+  17          
+  18          //**********************************************
+  19          void    delay_nus(uint i)
+  20          {
+  21   1              while(i--);
+  22   1      }
+  23          
+  24          //**********************************************
+  25          void    delay_nms(uchar i)
+  26          {
+  27   1              for(i;i>0;i--)
+  28   1              {
+  29   2                      delay_nus(1000);
+  30   2              }
+  31   1      }
+  32          
+  33          uchar mmdz102=0,mmdz103=0;
+  34          
+  35          /************
+  36          *bin : 0 x9c102   1 c9c103  
+  37          *fx : 0 加   1 减
+  38          *dat : 要走的量程 number
+  39          *例如： x9c103(0,0,50)  选中102 往前走 50个量程（500欧姆）
+  40          */
+  41          void x9c10(uchar bin,fx,dat)
+  42          {
+  43   1              uchar m = 0;
+  44   1              X9C103_INC = 1;
+  45   1              if(bin)X9C103_CS = 0;
+  46   1                      else X9C102_CS = 0;
+  47   1              X9C103_UD = fx;
+  48   1              _nop_();
+  49   1              for(m = 0;m < dat;m++)
+  50   1              {
+  51   2                      X9C103_INC = 0;
+  52   2                      _nop_();
+  53   2                      _nop_();
+  54   2                      X9C103_INC = 1;
+  55   2                      if(bin)X9C103_UD ? mmdz103-- : mmdz103++;
+C51 COMPILER V9.00   X9103                                                                 07/19/2016 12:01:24 PAGE 2   
+
+  56   2                              else X9C103_UD ? mmdz102-- : mmdz102++;
+  57   2              }
+  58   1              if(bin)X9C103_CS = 1;
+  59   1                      else X9C102_CS = 1;
+  60   1      }
+  61          
+  62          
+  63          void x9c10Run(uchar bin,dat)
+  64          {
+  65   1              if(dat >= 0 && dat < 100)
+  66   1              {
+  67   2                      if(bin)
+  68   2                              dat > mmdz103 ? x9c10(1,0,dat - mmdz103) : x9c10(1,1,mmdz103 - dat);
+  69   2                      else
+  70   2                              dat > mmdz102 ? x9c10(0,0,dat - mmdz102) : x9c10(0,1,mmdz102 - dat);
+  71   2              }       
+  72   1      }
+  73          
+  74          
+  75          void x9cInit()
+  76          {
+  77   1              x9c10(0,1,100);x9c10(1,1,100);//初始化x9013
+  78   1              mmdz102 = 9;mmdz103=0;
+  79   1      }
+  80          
+  81          
+  82          
+  83          void main(void)
+  84          {
+  85   1              uchar m=0,n=0;
+  86   1              x9cInit();
+  87   1              while(1)
+  88   1              {
+  89   2                      if(sw1 == 0)//++
+  90   2                      {
+  91   3                              x9c10Run(1,50);
+  92   3                              x9c10Run(0,50);
+  93   3                              delay_nms(1000);
+  94   3                      }
+  95   2                      if(sw2 == 0)//--
+  96   2                      {
+  97   3                              x9c10Run(0,10);
+  98   3                              x9c10Run(1,10);
+  99   3                              delay_nms(1000);
+ 100   3                      }
+ 101   2              }
+ 102   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    296    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
