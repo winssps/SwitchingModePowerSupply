@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"TLC2543.obj" 
+TO "circuit" 
+RAMSIZE(256) 
