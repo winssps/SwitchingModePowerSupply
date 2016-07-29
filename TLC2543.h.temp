@@ -6,17 +6,18 @@
 
 //sbit ad_eoc = P2^0;
 
-sbit ad_clock = P3^4;
-sbit ad_in = P3^5;
-sbit ad_out = P3^6;
-sbit ad_cs = P3^7;
+sbit ad_clock = P3^2;
+sbit ad_in = P3^3;
+sbit ad_out = P3^4;
+sbit ad_cs = P3^5;
 
 
 unsigned char code ad_chunnel_select[] ={
 	0x0c,
 	0x1c,
 	0x2c,
-	0x3c
+	0x3c,
+	0x4c
 };
 
 

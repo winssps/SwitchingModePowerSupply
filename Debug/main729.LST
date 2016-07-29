@@ -1,0 +1,282 @@
+C51 COMPILER V9.00   MAIN729                                                               07/29/2016 00:26:48 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN729
+OBJECT MODULE PLACED IN main729.OBJ
+COMPILER INVOKED BY: E:\Keil\C51\Bin\C51.exe main729.c DB OE INCDIR(E:\Keil\C51\INC;E:\Keil\C51\INC)
+
+line level    source
+
+   1          #include <AT89X55.H>
+*** WARNING C318 IN LINE 1 OF main729.c: can't open file 'AT89X55.H'
+   2          #define         INT8U           unsigned char
+   3          #define         INT16U          unsigned int
+   4          #include "CC1100.h"
+*** WARNING C318 IN LINE 4 OF main729.c: can't open file 'CC1100.h'
+   5          #include "lcd1602.h"
+*** WARNING C318 IN LINE 5 OF main729.c: can't open file 'lcd1602.h'
+   6          #include "24Cxx.h"
+*** WARNING C318 IN LINE 6 OF main729.c: can't open file '24Cxx.h'
+   7          sbit sgn_led=P1^0;   
+*** ERROR C202 IN LINE 7 OF MAIN729.C: 'P1': undefined identifier
+   8          sbit alarm_led=P1^1;
+*** ERROR C202 IN LINE 8 OF MAIN729.C: 'P1': undefined identifier
+   9          #define LOCK_ON  P3&=~(1<<7)  //开锁
+  10          #define LOCK_OFF P3|=(1<<7)       //关锁
+  11          #define BUZZ_ON  P3&=~(1<<6)  //蜂鸣器开
+  12          #define BUZZ_OFF P3|=(1<<6)       //蜂鸣器关
+  13          unsigned char password[6];        //6位密码值
+  14          //按键枚举
+  15          typedef enum key_type
+  16          {
+  17                   KEY_NONE=255,
+  18             KEY_0=0,
+  19             KEY_1=1,
+  20                  KEY_2=2,
+  21                  KEY_3=3,
+  22                  KEY_4=4,
+  23                  KEY_5=5,
+  24                  KEY_6=6,
+  25                  KEY_7=7,
+  26                  KEY_8=8,
+  27                  KEY_9=9,
+  28                  KEY_DEL=10,
+  29                  KEY_ADD=11,
+  30                  KEY_INQ=12,
+  31                  KEY_SET=13,
+  32                  KEY_CLEAR=14,
+  33                  KEY_OK=15,
+  34          
+  35          };
+  36           enum  key_type key;
+  37          
+  38          extern void delaynus(unsigned int t);
+  39          //======毫秒延时======
+  40          void delaynms(unsigned int t)
+  41          {
+  42   1        unsigned int i;
+  43   1        while(t--)
+  44   1         for(i=0;i<120;i++)
+  45   1         {
+  46   2           
+  47   2         }
+  48   1      }
+  49          //检查密码是否正确，正确返回1
+C51 COMPILER V9.00   MAIN729                                                               07/29/2016 00:26:48 PAGE 2   
+
+  50          unsigned char check_code(unsigned char *P)
+  51          {
+  52   1         unsigned char i;
+  53   1         for(i=0;i<6;i++)
+  54   1         {
+  55   2           if((*P++)!=password[i])return 0;  //密码不对
+  56   2         }
+  57   1        return 1;
+  58   1      }
+  59          
+  60          //毫秒级延时函数
+  61          void delay_nms(unsigned int t)
+  62          {
+  63   1        unsigned int i;
+  64   1        while(t--)
+  65   1         for(i=0;i<120;i++)
+  66   1         {
+  67   2           
+  68   2         }
+  69   1      }
+  70          
+  71          
+  72          void main(void)
+  73          {
+  74   1              unsigned char leng =0;
+  75   1              unsigned char tf =0;
+  76   1              unsigned char TxBuf[1]={0};      // 8字节, 如果需要更长的数据包,请正确设置
+  77   1              unsigned char RxBuf[1]={0};
+  78   1              unsigned char new_code[6];
+  79   1              unsigned char input[6],input_position=0;
+  80   1              bit key_state=0;    //锁的状态
+  81   1              unsigned char i;
+  82   1              unsigned char sys_state=0;   //系统状态 0：正常状态  1：输入旧密码  2  输入新密码
+  83   1              unsigned char error_cnt=0;  //错误次数
+  84   1              BL=0;            //背光开
+*** ERROR C202 IN LINE 84 OF MAIN729.C: 'BL': undefined identifier
+  85   1              init_lcd();              //初始液晶
+  86   1              LCD_write_string(4,0,"wireless ");
+  87   1              LCD_write_string(1,1,"password lock");   //开机显示
+  88   1              delaynms(1000);
+  89   1              LCD_Clear();
+  90   1              while(!CC1100_init())     //等待初始化RF模块成功
+  91   1              {
+  92   2                alarm_led=!alarm_led;   //如果初始化不成功，红灯闪烁
+  93   2                LCD_write_string(2,1,"RF1100 error");
+  94   2              }
+  95   1              alarm_led=1;
+  96   1              AT24C04_ReadPage(0,password,6);   //读取6位密码
+  97   1              for(i=0;i<6;i++)            //初始化密码
+  98   1              {
+  99   2            if(password[i]>9)
+ 100   2                  password[i]=8;
+ 101   2              }
+ 102   1              LCD_Clear();
+ 103   1              LCD_write_string(1,0,"input password ");
+ 104   1      
+ 105   1              while(1)
+ 106   1              {
+ 107   2                      leng =1; // 预计接受1 bytes
+ 108   2                      if(halRfReceivePacket(RxBuf,&leng))//看有没有接收到数据
+ 109   2                      {
+ 110   3                              BUZZ_ON;                //开蜂鸣器
+C51 COMPILER V9.00   MAIN729                                                               07/29/2016 00:26:48 PAGE 3   
+
+ 111   3                              key=RxBuf[0];                   //获取按键值
+ 112   3                              if(     key<10)                         //数字按键
+ 113   3                              {               
+ 114   4                                if(input_position<6)  //少于6位
+ 115   4                                {
+ 116   5                                 if(input_position==0) //一个都没输入，先清掉显示区域
+ 117   5                                 {
+ 118   6                                   LCD_write_string(0,1,"                ");
+ 119   6                                 }
+ 120   5                                 LCD_write_char(4+input_position,1,key+'0'); //显示输入的数字
+ 121   5                                       delay_nms(200);
+ 122   5                                       LCD_write_char(4+input_position,1,'*'); //显示*
+ 123   5                                 input[input_position]=key;  
+ 124   5                                 input_position++;
+ 125   5                                }
+ 126   4                              }
+ 127   3                              else if (key==KEY_CLEAR)          //【清除】按键
+ 128   3                              {
+ 129   4                               LCD_write_string(0,1,"                ");
+ 130   4                               input_position=0;
+ 131   4                              }
+ 132   3                              else if (key==KEY_DEL)      //退格按键
+ 133   3                              {
+ 134   4                               if(input_position)
+ 135   4                               {
+ 136   5                                 input_position--;
+ 137   5                                 LCD_write_char(4+input_position,1,' ');
+ 138   5                               }                       
+ 139   4                              }
+ 140   3                              else if (key==KEY_OK)    //【确定】按键
+ 141   3                              {
+ 142   4                                if(input_position<6)
+ 143   4                                       {
+ 144   5                                         LCD_write_string(1,1,"must be 6 code");
+ 145   5                                         input_position=0;                       
+ 146   5                                       }
+ 147   4                                else if(sys_state<2)    //输密码开锁状态 或者输旧密码状态
+ 148   4                                       {
+ 149   5                                              if(check_code(input))  //密码正确
+ 150   5                                               {
+ 151   6                                                  sgn_led=0;
+ 152   6                                                      error_cnt=0;    
+ 153   6                                                      if (sys_state==0)       //输密码开锁状态
+ 154   6                                                      {
+ 155   7                                                          key_state=!key_state;
+ 156   7                                                              if(key_state==1)
+ 157   7                                                               LOCK_ON;
+ 158   7                                                              else
+ 159   7                                                              {
+ 160   8                                                               LOCK_OFF;
+ 161   8                                                              }
+ 162   7                                                              LCD_write_string(1,1,"password is OK");
+ 163   7                                                      }
+ 164   6                                                      else
+ 165   6                                                      {
+ 166   7                                                        LCD_Clear();
+ 167   7                                                        LCD_write_string(3,0,"input new");
+ 168   7                                                        sys_state=2;   //切换到输入新密码
+ 169   7                                                      }
+ 170   6                                                      
+ 171   6                                                 input_position=0;
+ 172   6                                                 delaynms(100);
+C51 COMPILER V9.00   MAIN729                                                               07/29/2016 00:26:48 PAGE 4   
+
+ 173   6                                                 sgn_led=1;   
+ 174   6                                               }
+ 175   5                                               else  //密码错误
+ 176   5                                               {
+ 177   6                                                 LCD_write_string(1,1,"password error");
+ 178   6                                                 error_cnt++;
+ 179   6                                                 if(error_cnt>=3)      //错误3次以上 报警
+ 180   6                                                 {
+ 181   7                                                         alarm_led=0;
+ 182   7                                                         BUZZ_ON;delaynms(100);BUZZ_OFF;delaynms(100);
+ 183   7                                                         BUZZ_ON;delaynms(100);BUZZ_OFF;delaynms(100);
+ 184   7                                                         BUZZ_ON;delaynms(100);BUZZ_OFF;delaynms(100);
+ 185   7                                                         BUZZ_ON;delaynms(100);BUZZ_OFF;delaynms(100);
+ 186   7                                                         BUZZ_ON;delaynms(100);BUZZ_OFF;delaynms(100);
+ 187   7                                                         alarm_led=1;
+ 188   7                                                 }
+ 189   6                                                 input_position=0;
+ 190   6                                               }
+ 191   5                                      }
+ 192   4                                      else if(sys_state==2)     //第一次输新密码状态
+ 193   4                                       {
+ 194   5                                         for(i=0;i<6;i++)
+ 195   5                                          new_code[i]=input[i]; //保存第一次输入的6位新密码
+ 196   5                                         LCD_Clear();
+ 197   5                                         LCD_write_string(4,0,"Re-enter");
+ 198   5                                         sys_state=3;    //切换到再次输入新密码
+ 199   5                                         input_position=0;
+ 200   5                                       }
+ 201   4                                      else if(sys_state==3)     //第2次输新密码状态
+ 202   4                                       {
+ 203   5                                         LCD_Clear();
+ 204   5                                         for(i=0;i<6;i++)
+ 205   5                                         {
+ 206   6                                          if(new_code[i]!=input[i])break;  //2次密码不一致
+ 207   6                                         }
+ 208   5                                         if(i==6)      //2次密码一致
+ 209   5                                         {
+ 210   6                                           LCD_write_string(1,1,"new code set ok");
+ 211   6                                               for(i=0;i<6;i++)
+ 212   6                                             password[i]=input[i];
+ 213   6                                               AT24C04_WritePage(0,password,6);         //保存6位密码
+ 214   6                                               delaynms(1000);
+ 215   6                                               LCD_Clear();
+ 216   6                                               LCD_write_string(1,0,"input password ");
+ 217   6                                               sys_state=0;   //切换到输入密码开锁
+ 218   6                                               input_position=0;
+ 219   6                                         }
+ 220   5                                         else 
+ 221   5                                         {
+ 222   6                                           LCD_write_string(1,1,"2 codes differ");
+ 223   6                                               delaynms(1000);
+ 224   6                                               LCD_Clear();
+ 225   6                                               LCD_write_string(3,0,"input new");
+ 226   6                                               sys_state=2;   //切换到输入新密码
+ 227   6                                               input_position=0;
+ 228   6                                         }
+ 229   5                                         
+ 230   5                                         
+ 231   5                                       }                                               
+ 232   4                              }
+ 233   3                              else if (key==KEY_SET)            //设置键
+ 234   3                              {
+C51 COMPILER V9.00   MAIN729                                                               07/29/2016 00:26:48 PAGE 5   
+
+ 235   4                                 LCD_Clear();
+ 236   4                                if(sys_state==0)
+ 237   4                                {
+ 238   5                                  sys_state=1;
+ 239   5                                  LCD_write_string(3,0,"input old");
+ 240   5                                      input_position=0;
+ 241   5                                }
+ 242   4                                else 
+ 243   4                                {
+ 244   5                                 sys_state=0;
+ 245   5                                 LCD_write_string(1,0,"input password ");
+ 246   5                                 input_position=0;
+ 247   5                                }                      
+ 248   4                              }
+ 249   3                              delaynms(30);
+ 250   3                              BUZZ_OFF;
+ 251   3                      }
+ 252   2      
+ 253   2              }
+ 254   1              
+ 255   1      }
+ 256          
+
+C51 COMPILATION COMPLETE.  4 WARNING(S),  3 ERROR(S)
