@@ -582,3 +582,267 @@ linking...
 Program Size: data=105.1 xdata=100 code=6447
 creating hex file from "circuit"...
 "circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(173): error C141: syntax error near 'lcd_putnumstr'
+TLC2543.C(191): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(191): error C141: syntax error near '}'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(247): warning C206: 'vad_show': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AD_SHOW?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 1830H
+Program Size: data=105.3 xdata=100 code=6477
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(250): warning C206: 'vad_show': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AD_SHOW?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 183EH
+Program Size: data=105.3 xdata=100 code=6561
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(248): warning C206: 'vad_show': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AD_SHOW?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 1841H
+Program Size: data=105.3 xdata=100 code=6564
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(248): warning C206: 'vad_show': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AD_SHOW?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 1841H
+Program Size: data=105.3 xdata=100 code=6564
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(248): warning C206: 'vad_show': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AD_SHOW?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 1841H
+Program Size: data=105.3 xdata=100 code=6564
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(248): warning C206: 'vad_show': missing function-prototype
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?AD_SHOW?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 1841H
+Program Size: data=105.3 xdata=100 code=6565
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 6 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6565
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6571
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+TLC2543.C(192): warning C206: 'alcd_putnumstr': missing function-prototype
+TLC2543.C(192): error C267: 'alcd_putnumstr': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6571
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6571
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6578
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6581
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6582
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6589
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6591
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6591
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling TLC2543.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_X9C10RUN?TLC2543
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_XPD?TLC2543
+Program Size: data=94.3 xdata=100 code=6591
+creating hex file from "circuit"...
+"circuit" - 0 Error(s), 2 Warning(s).

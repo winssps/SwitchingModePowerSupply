@@ -1,4 +1,4 @@
-C51 COMPILER V9.00   TLC2543                                                               07/29/2016 10:33:52 PAGE 1   
+C51 COMPILER V9.00   TLC2543                                                               07/29/2016 11:11:10 PAGE 1   
 
 
 C51 COMPILER V9.00, COMPILATION OF MODULE TLC2543
@@ -29,7 +29,7 @@ line level    source
   20          
   21          uchar ocp = 30;//过流保护  一次0.1
   22          
-  23          bit d2buff = 0;
+  23          bit d2buff = 0,ocpbuff = 0,load = 0;
   24          
   25          void delay(uint t)
   26          {
@@ -62,7 +62,7 @@ line level    source
   53                  a = WriteByte( (chunnel<<4) | 0x0c );
   54                  b = WriteByte(0);
   55                  ad_cs = 1;
-C51 COMPILER V9.00   TLC2543                                                               07/29/2016 10:33:52 PAGE 2   
+C51 COMPILER V9.00   TLC2543                                                               07/29/2016 11:11:10 PAGE 2   
 
   56                  a <<= 8;
   57                  doc = a | b;
@@ -126,7 +126,7 @@ line level    source
  115              x_now=x_mid+kg*(ResrcData-x_mid);
  116                      
  117              p_now=(1-kg)*p_mid;  
-C51 COMPILER V9.00   TLC2543                                                               07/29/2016 10:33:52 PAGE 3   
+C51 COMPILER V9.00   TLC2543                                                               07/29/2016 11:11:10 PAGE 3   
 
  118              p_last = p_now; 
  119              x_last = x_now; 
@@ -171,171 +171,175 @@ line level    source
  158          {
  159   1      
  160   1              /**********************输入电压**********************************/
- 161   1                      lcd_putnumstr(32,0,0,AD_num[0]/10000);
- 162   1                      Lcd12864_Write16CnCHAR(40,0,0,".");
- 163   1                      lcd_putnumstr(48,0,0,AD_num[0]%10000/1000);
- 164   1                      lcd_putnumstr(56,0,0,AD_num[0]%10000%1000/100);
- 165   1      //              lcd_putnumstr(64,0,0,AD_num[0]%10000%1000%100/10);
- 166   1      //              lcd_putnumstr(72,0,0,AD_num[0]%10000%1000%100%10);
- 167   1      
- 168   1          /******************************过流保护****************************/
- 169   1                                      lcd_putnumstr(104,0,0,ocp/10);
- 170   1                      Lcd12864_Write16CnCHAR(112,0,0,".");
- 171   1                      lcd_putnumstr(120,0,0,ocp%10);
- 172   1      //              lcd_putnumstr(120,0,0,AD_num[1]%10000%1000/100);
- 173   1      //              lcd_putnumstr(112,0,0,AD_num[1]%10000%1000%100/10);
- 174   1      //              lcd_putnumstr(120,0,0,AD_num[1]%10000%1000%100%10);
- 175   1      
- 176   1          /******************************输出电压****************************/
- 177   1                                      lcd_putnumstr(40,2,0,AD_num[2]/10000);
- 178   1                      Lcd12864_Write16CnCHAR(48,2,0,".");
- 179   1                      lcd_putnumstr(56,2,0,AD_num[2]%10000/1000);
-C51 COMPILER V9.00   TLC2543                                                               07/29/2016 10:33:52 PAGE 4   
+ 161   1                      lcd_putnumstr(64,0,0,AD_num[0]/10000);
+ 162   1                      Lcd12864_Write16CnCHAR(72,0,0,".");
+ 163   1                      lcd_putnumstr(80,0,0,AD_num[0]%10000/1000);
+ 164   1                      lcd_putnumstr(88,0,0,AD_num[0]%10000%1000/100);
+ 165   1      
+ 166   1          /******************************输出电压****************************/
+ 167   1                      lcd_putnumstr(64,2,0,AD_num[2]/10000);
+ 168   1                      Lcd12864_Write16CnCHAR(72,2,0,".");
+ 169   1                      lcd_putnumstr(80,2,0,AD_num[2]%10000/1000);
+ 170   1                      lcd_putnumstr(88,2,0,AD_num[2]%10000%1000/100);
+ 171   1      
+ 172   1          /******************************输出电流****************************/
+ 173   1                      lcd_putnumstr(64,4,0,AD_num[3]/10000);
+ 174   1                      Lcd12864_Write16CnCHAR(72,4,0,".");
+ 175   1                      lcd_putnumstr(80,4,0,AD_num[3]%10000/1000);
+ 176   1                      lcd_putnumstr(88,4,0,AD_num[3]%10000%1000/100);
+ 177   1      
+ 178   1      
+ 179   1                      if(load)
+C51 COMPILER V9.00   TLC2543                                                               07/29/2016 11:11:10 PAGE 4   
 
- 180   1                      lcd_putnumstr(64,2,0,AD_num[2]%10000%1000/100);
- 181   1      //              lcd_putnumstr(64,2,0,AD_num[2]%10000%1000%100/10);
- 182   1      //              lcd_putnumstr(72,2,0,AD_num[2]%10000%1000%100%10);
- 183   1      
- 184   1          /******************************输出电流****************************/
- 185   1                                      lcd_putnumstr(40,4,0,AD_num[3]/10000);
- 186   1                      Lcd12864_Write16CnCHAR(48,4,0,".");
- 187   1                      lcd_putnumstr(56,4,0,AD_num[3]%10000/1000);
- 188   1                      lcd_putnumstr(64,4,0,AD_num[3]%10000%1000/100);
- 189   1      }
- 190          
- 191          uchar x9c = 0;
- 192          
- 193          
- 194          uint xpd(double value)
- 195          {
- 196   1              static const Vcc = 5.15 , R1 = 524;
- 197   1              double tmp = (Vcc - value)/R1;
- 198   1              double R2 = value / tmp;
- 199   1              return ((R2 + 50)/10);
- 200   1      }
- 201          
- 202          uchar swit()
- 203          {
- 204   1              uchar te = 0xff;
- 205   1              if(sw1 == 0)te=1;
- 206   1              if(sw2 == 0)te=2;
- 207   1              if(sw3 == 0)te=3;
- 208   1              if(sw4 == 0)te=4;
- 209   1              if(sw5 == 0)te=5;
- 210   1              return te;
- 211   1      }
- 212                  
- 213          
- 214          void zdInit()
- 215          {
- 216   1              AUXR = 0x80;
- 217   1              TMOD = 0x01;
- 218   1              TH0 = (65536-200)/256;
- 219   1              TL0 = (65536-200)%256;
- 220   1              ET0 = 1;
- 221   1              TR0 = 1;
- 222   1              EA = 1;
- 223   1      }
- 224          
- 225          void systemInit()
- 226          {
- 227   1               zdInit();
- 228   1              P4SW = P44EN | P45EN | P46EN;
- 229   1              ocpOff;
- 230   1              x9cInit();  //
- 231   1              Lcd12864_Init();
- 232   1              Lcd12864_ClearScreen(0x00);//12864清屏
- 233   1              Lcd12864_Write16CnCHAR(0,0,0,"inV:     OCP:");
- 234   1              Lcd12864_Write16CnCHAR(0,2,0,"outV:");
- 235   1              Lcd12864_Write16CnCHAR(0,4,0,"outA:");
- 236   1      }
- 237          
- 238          void systemRun()
- 239          {
- 240   1        uchar test = 0,swvalue = 0;
- 241   1        while(test == 0)
-C51 COMPILER V9.00   TLC2543                                                               07/29/2016 10:33:52 PAGE 5   
+ 180   1                      {
+ 181   2                              Lcd12864_Write16CnCHAR(0,6,0,"OCP:     R:   ");
+ 182   2                              lcd_putnumstr(40,6,0,ocp/10);
+ 183   2                              Lcd12864_Write16CnCHAR(48,6,0,".");
+ 184   2                              lcd_putnumstr(56,6,0,ocp%10);
+ 185   2                      }
+ 186   1                      else if(!load) 
+ 187   1                      {
+ 188   2          /******************************过流保护****************************/
+ 189   2                              Lcd12864_Write16CnCHAR(0,6,0,"OCP  :      ");
+ 190   2                              lcd_putnumstr(56,6,0,ocp/10);
+ 191   2                              Lcd12864_Write16CnCHAR(64,6,0,".");
+ 192   2                              lcd_putnumstr(72,6,0,ocp%10);   
+ 193   2                      }
+ 194   1      }
+ 195          
+ 196          uchar x9c = 0;
+ 197          
+ 198          
+ 199          uint xpd(double value)
+ 200          {
+ 201   1              static const Vcc = 3.0 , R1 = 1000;
+ 202   1              double tmp = (Vcc - value)/R1;
+ 203   1              double R2 = value / tmp;
+ 204   1              return ((R2 + 50)/10);
+ 205   1      }
+ 206          
+ 207          uchar swit()
+ 208          {
+ 209   1              uchar te = 0xff;
+ 210   1              if(sw1 == 0)te=1;
+ 211   1              if(sw2 == 0)te=2;
+ 212   1              if(sw3 == 0)te=3;
+ 213   1              if(sw4 == 0)te=4;
+ 214   1              if(sw5 == 0)te=5;
+ 215   1              return te;
+ 216   1      }
+ 217                  
+ 218          
+ 219          void zdInit()
+ 220          {
+ 221   1              AUXR = 0x80;
+ 222   1              TMOD = 0x01;
+ 223   1              TH0 = (65536-200)/256;
+ 224   1              TL0 = (65536-200)%256;
+ 225   1              ET0 = 1;
+ 226   1              TR0 = 1;
+ 227   1              EA = 1;
+ 228   1      }
+ 229          
+ 230          void systemInit()
+ 231          {
+ 232   1              zdInit();
+ 233   1              P4SW = 0xf0;
+ 234   1              x9cInit();  //
+ 235   1              Lcd12864_Init();
+ 236   1              Lcd12864_ClearScreen(0x00);//12864清屏
+ 237   1              Lcd12864_Write16CnCHAR(0,0,0,"inV  : ");
+ 238   1              Lcd12864_Write16CnCHAR(0,2,0,"outV : ");
+ 239   1              Lcd12864_Write16CnCHAR(0,4,0,"outA : ");
+ 240   1              ocpOff;
+ 241   1      }
+C51 COMPILER V9.00   TLC2543                                                               07/29/2016 11:11:10 PAGE 5   
 
- 242   1        {
- 243   2                vad_show();
-*** WARNING C206 IN LINE 243 OF TLC2543.C: 'vad_show': missing function-prototype
- 244   2                swvalue = swit();
- 245   2                if(swvalue != 0xff)
- 246   2                {
- 247   3                       switch(swvalue)
- 248   3                       {
- 249   4                               case 1 : break;
- 250   4                               case 2 : if(ocp < 40)ocp += 1; break;
- 251   4                               case 3 : ocp = 30;break;
- 252   4                               case 4 : if(ocp > 5)ocp -= 1;break;
- 253   4                               case 5 : break;
- 254   4                               
- 255   4                       }
- 256   3                       delay(5000);
- 257   3                       while(swit() != 0xff);
- 258   3                }
- 259   2        }
- 260   1      
- 261   1      }
- 262          
- 263          
- 264          void zd1() interrupt 1
- 265          {
- 266   1              unsigned char i=0;
- 267   1              TH0 = (65536-200)/256;
- 268   1              TL0 = (65536-200)%256;
- 269   1              e++;
- 270   1              adtime++;
- 271   1              if(adtime == 10)//2.0ms 采样一次  分别四路
- 272   1              {
- 273   2                      adtime = 0;
- 274   2                      AD_[ad_chunnel][aps] = readAD(ad_chunnel);
- 275   2                      ad_chunnel++;
- 276   2              }
- 277   1              if(ad_chunnel == 5){ad_chunnel = 0;aps++;}
- 278   1      
- 279   1              if(aps == 10) //100ms 计算一次
- 280   1              {
- 281   2                      aps = 0;
- 282   2                      for(i = 0;i < 5;i++) 
- 283   2                      {
- 284   3                              bubble(AD_[i],10);            //冒泡
- 285   3                              temp[i]  = Average(AD_[i],1,9); //平均值
- 286   3                              temp[i] = (temp[i] * addTcl2543) *10000;                
- 287   3                      }
- 288   2              }
- 289   1              if(e == 1000) //1s 输出一次
- 290   1              {
- 291   2                      d2buff = ~d2buff;
- 292   2                      LED2 = d2buff;
- 293   2                      e = 0;
- 294   2                      AD_num[showts] = temp[showts];
- 295   2                      showts++;
- 296   2                      if(showts == 5)showts=0;
- 297   2              }
- 298   1      }
- 299          
- 300          void main()
- 301          {
- 302   1              systemInit();
-C51 COMPILER V9.00   TLC2543                                                               07/29/2016 10:33:52 PAGE 6   
+ 242          
+ 243          void systemRun()
+ 244          {
+ 245   1        uchar test = 0,swvalue = 0;
+ 246   1        while(test == 0)
+ 247   1        {
+ 248   2                ad_show();
+ 249   2                swvalue = swit();
+ 250   2                if(swvalue != 0xff)
+ 251   2                {
+ 252   3                       switch(swvalue)
+ 253   3                       {
+ 254   4                               case 1 : break;
+ 255   4                               case 2 : if(ocp < 40)ocp += 1; break;
+ 256   4                               case 3 : ocp = 30;break;
+ 257   4                               case 4 : if(ocp > 5)ocp -= 1;break;
+ 258   4                               case 5 : load = ~load;LED2 = 1;break;
+ 259   4                               
+ 260   4                       }
+ 261   3                       delay(5000);
+ 262   3                       while(swit() != 0xff);
+ 263   3                }
+ 264   2        }
+ 265   1      
+ 266   1      }
+ 267          
+ 268          
+ 269          void zd1() interrupt 1
+ 270          {
+ 271   1              unsigned char i=0;
+ 272   1              TH0 = (65536-200)/256;
+ 273   1              TL0 = (65536-200)%256;
+ 274   1              e++;
+ 275   1              adtime++;
+ 276   1              if(adtime == 10)//2.0ms 采样一次  分别四路
+ 277   1              {
+ 278   2                      adtime = 0;
+ 279   2                      AD_[ad_chunnel][aps] = readAD(ad_chunnel);
+ 280   2                      ad_chunnel++;
+ 281   2              }
+ 282   1              if(ad_chunnel == 5){ad_chunnel = 0;aps++;}
+ 283   1      
+ 284   1              if(aps == 10) //100ms 计算一次
+ 285   1              {
+ 286   2                      aps = 0;
+ 287   2                      for(i = 0;i < 5;i++) 
+ 288   2                      {
+ 289   3                              bubble(AD_[i],10);            //冒泡
+ 290   3                              temp[i]  = Average(AD_[i],1,9); //平均值
+ 291   3                              temp[i] = (temp[i] * addTcl2543) *10000;                
+ 292   3                      }
+ 293   2              }
+ 294   1              if(e == 1000) //1s 输出一次
+ 295   1              {
+ 296   2                      d2buff = ~d2buff;
+ 297   2                      if(!load)LED2 = d2buff;
+ 298   2                      e = 0;
+ 299   2                      AD_num[showts] = temp[showts];
+ 300   2                      showts++;
+ 301   2                      if(showts == 5)showts=0;
+ 302   2              }
+ 303   1      }
+C51 COMPILER V9.00   TLC2543                                                               07/29/2016 11:11:10 PAGE 6   
 
- 303   1              while(1)
- 304   1              {
- 305   2                      systemRun();
- 306   2              }
- 307   1      }
+ 304          
+ 305          void main()
+ 306          {
+ 307   1              systemInit();
+ 308   1              while(1)
+ 309   1              {
+ 310   2                      systemRun();
+ 311   2              }
+ 312   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2849    ----
-   CONSTANT SIZE    =   1709    ----
+   CODE SIZE        =   2963    ----
+   CONSTANT SIZE    =   1735    ----
    XDATA SIZE       =    100    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =     44      64
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =      1    ----
+   BIT SIZE         =      3    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
