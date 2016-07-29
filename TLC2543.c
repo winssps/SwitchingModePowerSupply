@@ -186,11 +186,6 @@ void ad_show()
 		Lcd12864_Write16CnCHAR(48,4,0,".");
 		lcd_putnumstr(56,4,0,AD_num[3]%10000/1000);
 		lcd_putnumstr(64,4,0,AD_num[3]%10000%1000/100);
-//		lcd_putnumstr(112,2,0,AD_num[3]%10000%1000%100/10);
-//		lcd_putnumstr(120,2,0,AD_num[3]%10000%1000%100%10);
-
-
-
 }
 
 uchar x9c = 0;
@@ -202,6 +197,67 @@ uint xpd(double value)
 	double tmp = (Vcc - value)/R1;
 	double R2 = value / tmp;
 	return ((R2 + 50)/10);
+}
+
+uchar swit()
+{
+	uchar te = 0xff;
+	if(sw1 == 0)te=1;
+	if(sw2 == 0)te=2;
+	if(sw3 == 0)te=3;
+	if(sw4 == 0)te=4;
+	if(sw5 == 0)te=5;
+	return te;
+}
+	
+
+void zdInit()
+{
+	AUXR = 0x80;
+   	TMOD = 0x01;
+	TH0 = (65536-200)/256;
+	TL0 = (65536-200)%256;
+	ET0 = 1;
+	TR0 = 1;
+	EA = 1;
+}
+
+void systemInit()
+{
+	 zdInit();
+	P4SW = P44EN | P45EN | P46EN;
+	ocpOff;
+	x9cInit();  //
+	Lcd12864_Init();
+	Lcd12864_ClearScreen(0x00);//12864«Â∆¡
+	Lcd12864_Write16CnCHAR(0,0,0,"inV:     OCP:");
+	Lcd12864_Write16CnCHAR(0,2,0,"outV:");
+	Lcd12864_Write16CnCHAR(0,4,0,"outA:");
+}
+
+void systemRun()
+{
+  uchar test = 0,swvalue = 0;
+  while(test == 0)
+  {
+  	  vad_show();
+  	  swvalue = swit();
+	  if(swvalue != 0xff)
+	  {
+	  	 switch(swvalue)
+		 {
+		 	 case 1 : break;
+			 case 2 : if(ocp < 40)ocp += 1; break;
+			 case 3 : ocp = 30;break;
+			 case 4 : if(ocp > 5)ocp -= 1;break;
+			 case 5 : break;
+			 
+		 }
+		 delay(5000);
+		 while(swit() != 0xff);
+	  }
+  }
+
 }
 
 
@@ -234,7 +290,6 @@ void zd1() interrupt 1
 	{
 		d2buff = ~d2buff;
 		LED2 = d2buff;
-		ocpio = d2buff;
 		e = 0;
 		AD_num[showts] = temp[showts];
 		showts++;
@@ -242,27 +297,11 @@ void zd1() interrupt 1
 	}
 }
 
-void main(void)
+void main()
 {
-	bit ocpbuff = 1;
-	TMOD = 0x01;
-	TH0 = (65536-250)/256;
-	TL0 = (65536-250)%256;
-	ET0 = 1;
-	TR0 = 1;
-//	EA = 1;
-	x9cInit();  //
-	Lcd12864_Init();
-	Lcd12864_ClearScreen(0x00);//«Â∆¡
-//	Lcd12864_Write16CnCHAR(0,0,0,"Welcome to ");
-//	Lcd12864_Write16CnCHAR(0,2,0," using the AD/C. ");
-	Lcd12864_Write16CnCHAR(0,0,0,"inV:     OCP:");
-	Lcd12864_Write16CnCHAR(0,2,0,"outV:");
-	Lcd12864_Write16CnCHAR(0,4,0,"outA:");
- 	ocpOff;
-	
+	systemInit();
 	while(1)
 	{
-		//ad_show();
+		systemRun();
 	}
 }

@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        07/29/2016  10:07:42  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/29/2016  10:33:52  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -44,8 +44,7 @@ LINK MAP OF MODULE:  circuit (?C_STARTUP)
             DATA    0008H     0010H     UNIT         ?DT?_LCD_PUTNUMSTR?TLC2543
             DATA    0018H     0008H     UNIT         ?DT?_XPD?TLC2543
             BIT     0020H.0   0000H.1   UNIT         ?BI?TLC2543
-            BIT     0020H.1   0000H.1   UNIT         _BIT_GROUP_
-                    0020H.2   0000H.6                *** GAP ***
+                    0020H.1   0000H.7                *** GAP ***
             DATA    0021H     002CH     UNIT         ?DT?TLC2543
             DATA    004DH     001CH     UNIT         _DATA_GROUP_
             IDATA   0069H     0001H     UNIT         ?STACK
@@ -55,80 +54,97 @@ LINK MAP OF MODULE:  circuit (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-                    0003H     0008H                  *** GAP ***
+            CODE    0003H     0008H     UNIT         ?PR?MAIN?TLC2543
             CODE    000BH     0003H     ABSOLUTE     
             CODE    000EH     06ADH     UNIT         ?CO?TLC2543
             CODE    06BBH     061EH     UNIT         ?C?LIB_CODE
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 2
-
-
             CODE    0CD9H     01C8H     UNIT         ?PR?AD_SHOW?TLC2543
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 2
+
+
             CODE    0EA1H     01B9H     UNIT         ?PR?_LCD_PUTNUMSTR?TLC2543
             CODE    105AH     015FH     UNIT         ?PR?_LCD12864_WRITE16CNCHAR?TLC2543
-            CODE    11B9H     0146H     UNIT         ?PR?ZD1?TLC2543
-            CODE    12FFH     00ECH     UNIT         ?PR?_AVERAGE?TLC2543
-            CODE    13EBH     00B1H     UNIT         ?C_INITSEG
-            CODE    149CH     0090H     UNIT         ?PR?_BUBBLE?TLC2543
-            CODE    152CH     008DH     UNIT         ?PR?LCD12864_INIT?TLC2543
-            CODE    15B9H     008CH     UNIT         ?C_C51STARTUP
-            CODE    1645H     0079H     UNIT         ?PR?_XPD?TLC2543
-            CODE    16BEH     0068H     UNIT         ?PR?_X9C10RUN?TLC2543
-            CODE    1726H     0055H     UNIT         ?PR?MAIN?TLC2543
-            CODE    177BH     0052H     UNIT         ?PR?_READAD?TLC2543
-            CODE    17CDH     004BH     UNIT         ?PR?_X9C10?TLC2543
-            CODE    1818H     0047H     UNIT         ?PR?_LCDST7565_WRITE?TLC2543
-            CODE    185FH     0042H     UNIT         ?PR?_LCD12864_CLEARSCREEN?TLC2543
-            CODE    18A1H     0019H     UNIT         ?PR?X9CINIT?TLC2543
-            CODE    18BAH     000BH     UNIT         ?PR?_DELAY?TLC2543
+            CODE    11B9H     0142H     UNIT         ?PR?ZD1?TLC2543
+            CODE    12FBH     00ECH     UNIT         ?PR?_AVERAGE?TLC2543
+            CODE    13E7H     00B1H     UNIT         ?C_INITSEG
+            CODE    1498H     0090H     UNIT         ?PR?_BUBBLE?TLC2543
+            CODE    1528H     008DH     UNIT         ?PR?LCD12864_INIT?TLC2543
+            CODE    15B5H     008CH     UNIT         ?C_C51STARTUP
+            CODE    1641H     0079H     UNIT         ?PR?_XPD?TLC2543
+            CODE    16BAH     0068H     UNIT         ?PR?_X9C10RUN?TLC2543
+            CODE    1722H     0052H     UNIT         ?PR?_READAD?TLC2543
+            CODE    1774H     004BH     UNIT         ?PR?_X9C10?TLC2543
+            CODE    17BFH     004AH     UNIT         ?PR?SYSTEMINIT?TLC2543
+            CODE    1809H     004AH     UNIT         ?PR?SYSTEMRUN?TLC2543
+            CODE    1853H     0047H     UNIT         ?PR?_LCDST7565_WRITE?TLC2543
+            CODE    189AH     0042H     UNIT         ?PR?_LCD12864_CLEARSCREEN?TLC2543
+            CODE    18DCH     001CH     UNIT         ?PR?SWIT?TLC2543
+            CODE    18F8H     0019H     UNIT         ?PR?X9CINIT?TLC2543
+            CODE    1911H     0013H     UNIT         ?PR?ZDINIT?TLC2543
+            CODE    1924H     000BH     UNIT         ?PR?_DELAY?TLC2543
 
 
 
 OVERLAY MAP OF MODULE:   circuit (?C_STARTUP)
 
 
-SEGMENT                                        BIT_GROUP          DATA_GROUP 
-  +--> CALLED SEGMENT                       START    LENGTH     START    LENGTH
--------------------------------------------------------------------------------
-?C_C51STARTUP                               -----    -----      -----    -----
+SEGMENT                                       DATA_GROUP 
+  +--> CALLED SEGMENT                       START    LENGTH
+-----------------------------------------------------------
+?C_C51STARTUP                               -----    -----
   +--> ?PR?MAIN?TLC2543
   +--> ?C_INITSEG
 
-?PR?MAIN?TLC2543                            0020H.1  0000H.1    -----    -----
+?PR?MAIN?TLC2543                            -----    -----
+  +--> ?PR?SYSTEMINIT?TLC2543
+  +--> ?PR?SYSTEMRUN?TLC2543
+
+?PR?SYSTEMINIT?TLC2543                      -----    -----
+  +--> ?PR?ZDINIT?TLC2543
   +--> ?PR?X9CINIT?TLC2543
   +--> ?PR?LCD12864_INIT?TLC2543
   +--> ?PR?_LCD12864_CLEARSCREEN?TLC2543
   +--> ?CO?TLC2543
   +--> ?PR?_LCD12864_WRITE16CNCHAR?TLC2543
 
-?PR?X9CINIT?TLC2543                         -----    -----      -----    -----
+?PR?X9CINIT?TLC2543                         -----    -----
   +--> ?PR?_X9C10?TLC2543
 
-?PR?LCD12864_INIT?TLC2543                   -----    -----      -----    -----
+?PR?LCD12864_INIT?TLC2543                   -----    -----
   +--> ?PR?_LCDST7565_WRITE?TLC2543
 
-?PR?_LCD12864_CLEARSCREEN?TLC2543           -----    -----      004DH    0003H
+?PR?_LCD12864_CLEARSCREEN?TLC2543           004DH    0003H
   +--> ?PR?_LCDST7565_WRITE?TLC2543
 
-?PR?_LCD12864_WRITE16CNCHAR?TLC2543         -----    -----      004DH    000CH
+?PR?_LCD12864_WRITE16CNCHAR?TLC2543         004DH    000CH
   +--> ?PR?_LCDST7565_WRITE?TLC2543
   +--> ?CO?TLC2543
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 3
+
+
+
+?PR?SYSTEMRUN?TLC2543                       004DH    0001H
+  +--> ?PR?SWIT?TLC2543
+  +--> ?PR?_DELAY?TLC2543
 
 *** NEW ROOT ***************************************************
 
-?PR?ZD1?TLC2543                             -----    -----      0059H    0001H
+?PR?ZD1?TLC2543                             0059H    0001H
   +--> ?PR?_READAD?TLC2543
   +--> ?PR?_BUBBLE?TLC2543
   +--> ?PR?_AVERAGE?TLC2543
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 3
 
-
-
-?PR?_READAD?TLC2543                         -----    -----      -----    -----
+?PR?_READAD?TLC2543                         -----    -----
   +--> ?CO?TLC2543
 
-?PR?_BUBBLE?TLC2543                         -----    -----      005AH    0008H
+?PR?_BUBBLE?TLC2543                         005AH    0008H
 
-?PR?_AVERAGE?TLC2543                        -----    -----      005AH    000FH
+?PR?_AVERAGE?TLC2543                        005AH    000FH
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   VAD_SHOW
 
 
 
@@ -138,7 +154,7 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:15B9H         SEGMENT       ?C_C51STARTUP
+  C:15B5H         SEGMENT       ?C_C51STARTUP
   I:0069H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
@@ -148,7 +164,7 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:15BCH         SYMBOL        IDATALOOP
+  C:15B8H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -157,18 +173,21 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:15B9H         SYMBOL        STARTUP1
+  C:15B5H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:15B9H         LINE#         133
-  C:15BBH         LINE#         134
-  C:15BCH         LINE#         135
-  C:15BDH         LINE#         136
-  C:15BFH         LINE#         185
-  C:15C2H         LINE#         196
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 4
+
+
+  C:15B5H         LINE#         133
+  C:15B7H         LINE#         134
+  C:15B8H         LINE#         135
+  C:15B9H         LINE#         136
+  C:15BBH         LINE#         185
+  C:15BEH         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        TLC2543
@@ -179,30 +198,34 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
   C:00B7H         PUBLIC        nAsciiDot
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 4
-
-
   D:00C0H         PUBLIC        P4
   D:00C8H         PUBLIC        P5
+  B:00A8H.7       PUBLIC        EA
   B:00B0H.6       PUBLIC        LED2
   D:00A8H         PUBLIC        IE
   C:11B9H         PUBLIC        zd1
-  C:152CH         PUBLIC        Lcd12864_Init
-  C:18BAH         PUBLIC        _delay
+  C:1528H         PUBLIC        Lcd12864_Init
+  C:1924H         PUBLIC        _delay
   D:0025H         PUBLIC        x9c
   D:0026H         PUBLIC        ad_chunnel
   C:002FH         PUBLIC        CN16CHAR
   D:00B8H         PUBLIC        IP
+  B:00C8H.1       PUBLIC        sw1
   B:00A0H.2       PUBLIC        ocpio
+  B:00C8H.0       PUBLIC        sw2
   C:0EA6H         PUBLIC        _lcd_putnumstr
-  C:183BH         PUBLIC        _LcdSt7565_Write
-  C:177BH         PUBLIC        _readAD
+  B:00A0H.4       PUBLIC        sw3
+  B:00A0H.3       PUBLIC        sw4
+  B:00B0H.7       PUBLIC        sw5
+  C:1876H         PUBLIC        _LcdSt7565_Write
+  C:1722H         PUBLIC        _readAD
   D:00D8H         PUBLIC        CCON
   B:00A0H.6       PUBLIC        X9C103_INC
-  C:1726H         PUBLIC        main
+  C:0003H         PUBLIC        main
   D:0027H         PUBLIC        showts
-  C:18A1H         PUBLIC        x9cInit
-  C:16BEH         PUBLIC        _x9c10Run
+  C:18F8H         PUBLIC        x9cInit
+  C:16BAH         PUBLIC        _x9c10Run
+  D:00BBH         PUBLIC        P4SW
   D:0098H         PUBLIC        SCON
   B:00B0H.2       PUBLIC        ad_clock
   D:0089H         PUBLIC        TMOD
@@ -210,16 +233,22 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:0028H         PUBLIC        AD_num
   D:0032H         PUBLIC        temp
   B:0020H.0       PUBLIC        d2buff
-  C:12FFH         PUBLIC        _Average
+  C:12FBH         PUBLIC        _Average
+  C:17BFH         PUBLIC        systemInit
+  D:008EH         PUBLIC        AUXR
   D:0046H         PUBLIC        ocp
   C:06B7H         SYMBOL        _?ix1000
   C:105AH         PUBLIC        _Lcd12864_Write16CnCHAR
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 5
+
+
   D:0047H         PUBLIC        aps
   D:00E0H         PUBLIC        ACC
+  C:18DCH         PUBLIC        swit
   B:00A8H.1       PUBLIC        ET0
-  C:185FH         PUBLIC        _Lcd12864_ClearScreen
+  C:189AH         PUBLIC        _Lcd12864_ClearScreen
   D:008CH         PUBLIC        TH0
-  C:1645H         PUBLIC        _xpd
+  C:1641H         PUBLIC        _xpd
   D:0048H         PUBLIC        mmdz102
   D:0049H         PUBLIC        mmdz103
   D:008AH         PUBLIC        TL0
@@ -227,6 +256,7 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   B:00C0H.6       PUBLIC        LCD12864_CS
   B:0088H.4       PUBLIC        TR0
   B:00A0H.7       PUBLIC        X9C102_CS
+  C:1809H         PUBLIC        systemRun
   B:00C0H.4       PUBLIC        X9C103_CS
   B:0090H.1       PUBLIC        LCD12864_RS
   B:00A0H.5       PUBLIC        X9C103_UD
@@ -234,75 +264,73 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   X:0000H         PUBLIC        AD_
   B:00C0H.2       PUBLIC        LCD12864_RW
   C:0CD9H         PUBLIC        ad_show
-  C:149CH         PUBLIC        _bubble
-  C:17CDH         PUBLIC        _x9c10
+  C:1498H         PUBLIC        _bubble
+  C:1911H         PUBLIC        zdInit
+  C:1774H         PUBLIC        _x9c10
   D:004CH         PUBLIC        adtime
   B:00C0H.1       PUBLIC        LCD12864_RSET
   D:00D0H         PUBLIC        PSW
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 5
-
-
   C:002AH         PUBLIC        ad_chunnel_select
   B:00B0H.5       PUBLIC        ad_cs
   B:00B0H.3       PUBLIC        ad_in
-  C:1827H         SYMBOL        L?0137
-  C:1836H         SYMBOL        L?0138
-  C:1837H         SYMBOL        L?0139
-  -------         PROC          L?0136
-  -------         ENDPROC       L?0136
-  C:1827H         SYMBOL        L?0137
-  C:1836H         SYMBOL        L?0138
-  C:1837H         SYMBOL        L?0139
+  C:1862H         SYMBOL        L?0159
+  C:1871H         SYMBOL        L?0160
+  C:1872H         SYMBOL        L?0161
+  -------         PROC          L?0158
+  -------         ENDPROC       L?0158
+  C:1862H         SYMBOL        L?0159
+  C:1871H         SYMBOL        L?0160
+  C:1872H         SYMBOL        L?0161
   -------         PROC          _LCDST7565_WRITE
   D:0001H         SYMBOL        cmd
   D:0006H         SYMBOL        at
   D:0002H         SYMBOL        dat
-  C:183BH         LINE#         10
-  C:1841H         LINE#         11
-  C:1841H         LINE#         12
-  C:1843H         LINE#         13
-  C:1845H         LINE#         14
-  C:184AH         LINE#         15
-  C:184CH         LINE#         16
-  C:184DH         LINE#         17
-  C:184EH         LINE#         19
-  C:1856H         LINE#         20
-  C:185AH         LINE#         21
-  C:185BH         LINE#         22
-  C:185CH         LINE#         24
-  C:185EH         LINE#         25
+  C:1876H         LINE#         10
+  C:187CH         LINE#         11
+  C:187CH         LINE#         12
+  C:187EH         LINE#         13
+  C:1880H         LINE#         14
+  C:1885H         LINE#         15
+  C:1887H         LINE#         16
+  C:1888H         LINE#         17
+  C:1889H         LINE#         19
+  C:1891H         LINE#         20
+  C:1895H         LINE#         21
+  C:1896H         LINE#         22
+  C:1897H         LINE#         24
+  C:1899H         LINE#         25
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 6
+
+
   -------         ENDPROC       _LCDST7565_WRITE
   -------         PROC          LCD12864_INIT
   -------         DO            
   D:0007H         SYMBOL        i
   -------         ENDDO         
-  C:152CH         LINE#         35
-  C:152CH         LINE#         36
-  C:152CH         LINE#         38
-  C:152EH         LINE#         39
-  C:1534H         LINE#         40
-  C:1536H         LINE#         41
-  C:1538H         LINE#         47
-  C:1543H         LINE#         48
-  C:1549H         LINE#         51
-  C:1554H         LINE#         54
-  C:155BH         LINE#         58
-  C:1562H         LINE#         61
-  C:1569H         LINE#         64
-  C:1570H         LINE#         68
-  C:1577H         LINE#         69
-  C:157EH         LINE#         73
-  C:1585H         LINE#         74
-  C:158CH         LINE#         77
-  C:1593H         LINE#         80
-  C:159AH         LINE#         81
-  C:15A0H         LINE#         84
-  C:15ABH         LINE#         87
-  C:15B2H         LINE#         88
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 6
-
-
-  C:15B8H         LINE#         90
+  C:1528H         LINE#         35
+  C:1528H         LINE#         36
+  C:1528H         LINE#         38
+  C:152AH         LINE#         39
+  C:1530H         LINE#         40
+  C:1532H         LINE#         41
+  C:1534H         LINE#         47
+  C:153FH         LINE#         48
+  C:1545H         LINE#         51
+  C:1550H         LINE#         54
+  C:1557H         LINE#         58
+  C:155EH         LINE#         61
+  C:1565H         LINE#         64
+  C:156CH         LINE#         68
+  C:1573H         LINE#         69
+  C:157AH         LINE#         73
+  C:1581H         LINE#         74
+  C:1588H         LINE#         77
+  C:158FH         LINE#         80
+  C:1596H         LINE#         81
+  C:159CH         LINE#         84
+  C:15A7H         LINE#         87
+  C:15AEH         LINE#         88
+  C:15B4H         LINE#         90
   -------         ENDPROC       LCD12864_INIT
   -------         PROC          _LCD12864_CLEARSCREEN
   D:004DH         SYMBOL        temp
@@ -310,19 +338,19 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:004EH         SYMBOL        i
   D:004FH         SYMBOL        j
   -------         ENDDO         
-  C:185FH         LINE#         99
-  C:1861H         LINE#         100
-  C:1861H         LINE#         103
-  C:1864H         LINE#         104
-  C:1864H         LINE#         108
-  C:1873H         LINE#         115
-  C:1878H         LINE#         116
-  C:187EH         LINE#         119
-  C:1881H         LINE#         120
-  C:1881H         LINE#         121
-  C:188EH         LINE#         122
-  C:1897H         LINE#         123
-  C:18A0H         LINE#         124
+  C:189AH         LINE#         99
+  C:189CH         LINE#         100
+  C:189CH         LINE#         103
+  C:189FH         LINE#         104
+  C:189FH         LINE#         108
+  C:18AEH         LINE#         115
+  C:18B3H         LINE#         116
+  C:18B9H         LINE#         119
+  C:18BCH         LINE#         120
+  C:18BCH         LINE#         121
+  C:18C9H         LINE#         122
+  C:18D2H         LINE#         123
+  C:18DBH         LINE#         124
   -------         ENDPROC       _LCD12864_CLEARSCREEN
   -------         PROC          _LCD12864_WRITE16CNCHAR
   D:004DH         SYMBOL        x
@@ -331,6 +359,9 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:0051H         SYMBOL        cn
   -------         DO            
   D:0054H         SYMBOL        i
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 7
+
+
   D:0055H         SYMBOL        j
   D:0056H         SYMBOL        x1
   D:0057H         SYMBOL        x2
@@ -359,9 +390,6 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   C:10BEH         LINE#         172
   C:10BEH         LINE#         173
   C:10D5H         LINE#         174
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 7
-
-
   C:10D8H         LINE#         175
   C:10D8H         LINE#         176
   C:10DEH         LINE#         177
@@ -391,14 +419,17 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   C:1196H         LINE#         208
   C:119CH         LINE#         209
   C:119CH         LINE#         210
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 8
+
+
   C:11A8H         LINE#         211
   C:11B3H         LINE#         212
   C:11B3H         LINE#         213
   C:11B6H         LINE#         214
   C:11B8H         LINE#         215
   -------         ENDPROC       _LCD12864_WRITE16CNCHAR
-  -------         PROC          L?0140
-  -------         ENDPROC       L?0140
+  -------         PROC          L?0162
+  -------         ENDPROC       L?0162
   -------         PROC          _LCD_PUTNUMSTR
   D:0008H         SYMBOL        x
   D:0009H         SYMBOL        y
@@ -419,9 +450,6 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   C:0EBBH         LINE#         221
   C:0ECCH         LINE#         222
   C:0EE2H         LINE#         223
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 8
-
-
   C:0EFCH         LINE#         224
   C:0F16H         LINE#         225
   C:0F2EH         LINE#         226
@@ -451,6 +479,9 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   C:0FFFH         LINE#         259
   C:100CH         LINE#         260
   C:1011H         LINE#         261
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 9
+
+
   C:1011H         LINE#         262
   C:103EH         LINE#         263
   C:1047H         LINE#         264
@@ -465,56 +496,56 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   -------         DO            
   D:0007H         SYMBOL        m
   -------         ENDDO         
-  C:17CDH         LINE#         12
-  C:17CFH         LINE#         13
-  C:17CFH         LINE#         14
-  C:17CFH         LINE#         15
-  C:17D1H         LINE#         16
-  C:17D8H         LINE#         17
-  C:17DAH         LINE#         18
-  C:17E0H         LINE#         19
-  C:17E1H         LINE#         20
-  C:17EFH         LINE#         21
-  C:17EFH         LINE#         22
-  C:17F1H         LINE#         23
-  C:17F2H         LINE#         24
-  C:17F3H         LINE#         25
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 9
-
-
-  C:17F5H         LINE#         26
-  C:1803H         LINE#         27
-  C:180CH         LINE#         28
-  C:180FH         LINE#         29
-  C:1815H         LINE#         30
-  C:1817H         LINE#         31
+  C:1774H         LINE#         12
+  C:1776H         LINE#         13
+  C:1776H         LINE#         14
+  C:1776H         LINE#         15
+  C:1778H         LINE#         16
+  C:177FH         LINE#         17
+  C:1781H         LINE#         18
+  C:1787H         LINE#         19
+  C:1788H         LINE#         20
+  C:1796H         LINE#         21
+  C:1796H         LINE#         22
+  C:1798H         LINE#         23
+  C:1799H         LINE#         24
+  C:179AH         LINE#         25
+  C:179CH         LINE#         26
+  C:17AAH         LINE#         27
+  C:17B3H         LINE#         28
+  C:17B6H         LINE#         29
+  C:17BCH         LINE#         30
+  C:17BEH         LINE#         31
   -------         ENDPROC       _X9C10
   -------         PROC          _X9C10RUN
   D:0007H         SYMBOL        bin
   D:0004H         SYMBOL        dat
-  C:16BEH         LINE#         34
-  C:16BEH         LINE#         35
-  C:16BEH         LINE#         36
-  C:16D0H         LINE#         37
-  C:16D0H         LINE#         38
-  C:16D3H         LINE#         39
-  C:16FBH         LINE#         41
-  C:1725H         LINE#         42
-  C:1725H         LINE#         43
+  C:16BAH         LINE#         34
+  C:16BAH         LINE#         35
+  C:16BAH         LINE#         36
+  C:16CCH         LINE#         37
+  C:16CCH         LINE#         38
+  C:16CFH         LINE#         39
+  C:16F7H         LINE#         41
+  C:1721H         LINE#         42
+  C:1721H         LINE#         43
   -------         ENDPROC       _X9C10RUN
   -------         PROC          X9CINIT
-  C:18A1H         LINE#         46
-  C:18A1H         LINE#         47
-  C:18A1H         LINE#         48
-  C:18B3H         LINE#         49
-  C:18B9H         LINE#         50
+  C:18F8H         LINE#         46
+  C:18F8H         LINE#         47
+  C:18F8H         LINE#         48
+  C:190AH         LINE#         49
+  C:1910H         LINE#         50
   -------         ENDPROC       X9CINIT
   -------         PROC          _DELAY
   D:0006H         SYMBOL        t
-  C:18BAH         LINE#         25
-  C:18BAH         LINE#         26
-  C:18BAH         LINE#         27
-  C:18C4H         LINE#         28
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 10
+
+
+  C:1924H         LINE#         25
+  C:1924H         LINE#         26
+  C:1924H         LINE#         27
+  C:192EH         LINE#         28
   -------         ENDPROC       _DELAY
   -------         PROC          _READAD
   D:0007H         SYMBOL        chunnel
@@ -523,38 +554,35 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:0007H         SYMBOL        dout
   D:0002H         SYMBOL        din
   -------         ENDDO         
-  C:177BH         LINE#         63
-  C:177BH         LINE#         64
-  C:177BH         LINE#         65
-  C:1783H         LINE#         66
-  C:1786H         LINE#         67
-  C:1787H         LINE#         68
-  C:1788H         LINE#         69
-  C:1789H         LINE#         70
-  C:178BH         LINE#         73
-  C:178BH         LINE#         74
-  C:178BH         LINE#         75
-  C:178DH         LINE#         76
-  C:1795H         LINE#         77
-  C:1797H         LINE#         78
-  C:179BH         LINE#         79
-  C:179DH         LINE#         80
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 10
-
-
-  C:179EH         LINE#         81
-  C:17A2H         LINE#         82
-  C:17A4H         LINE#         83
-  C:17A4H         LINE#         85
-  C:17AAH         LINE#         86
-  C:17ACH         LINE#         87
-  C:17B3H         LINE#         88
-  C:17B5H         LINE#         89
-  C:17B6H         LINE#         90
-  C:17BAH         LINE#         91
-  C:17BCH         LINE#         92
-  C:17C9H         LINE#         93
-  C:17CCH         LINE#         94
+  C:1722H         LINE#         63
+  C:1722H         LINE#         64
+  C:1722H         LINE#         65
+  C:172AH         LINE#         66
+  C:172DH         LINE#         67
+  C:172EH         LINE#         68
+  C:172FH         LINE#         69
+  C:1730H         LINE#         70
+  C:1732H         LINE#         73
+  C:1732H         LINE#         74
+  C:1732H         LINE#         75
+  C:1734H         LINE#         76
+  C:173CH         LINE#         77
+  C:173EH         LINE#         78
+  C:1742H         LINE#         79
+  C:1744H         LINE#         80
+  C:1745H         LINE#         81
+  C:1749H         LINE#         82
+  C:174BH         LINE#         83
+  C:174BH         LINE#         85
+  C:1751H         LINE#         86
+  C:1753H         LINE#         87
+  C:175AH         LINE#         88
+  C:175CH         LINE#         89
+  C:175DH         LINE#         90
+  C:1761H         LINE#         91
+  C:1763H         LINE#         92
+  C:1770H         LINE#         93
+  C:1773H         LINE#         94
   -------         ENDPROC       _READAD
   -------         PROC          _BUBBLE
   D:005AH         SYMBOL        array
@@ -564,22 +592,25 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:005FH         SYMBOL        j
   D:0060H         SYMBOL        tmp
   -------         ENDDO         
-  C:149CH         LINE#         125
-  C:14A4H         LINE#         126
-  C:14A4H         LINE#         127
-  C:14A9H         LINE#         129
-  C:14B2H         LINE#         130
-  C:14B2H         LINE#         131
-  C:14BCH         LINE#         132
-  C:14BCH         LINE#         133
-  C:14EAH         LINE#         134
-  C:14EAH         LINE#         135
-  C:14EEH         LINE#         136
-  C:1510H         LINE#         137
-  C:1523H         LINE#         138
-  C:1523H         LINE#         139
-  C:1527H         LINE#         140
-  C:152BH         LINE#         141
+  C:1498H         LINE#         125
+  C:14A0H         LINE#         126
+  C:14A0H         LINE#         127
+  C:14A5H         LINE#         129
+  C:14AEH         LINE#         130
+  C:14AEH         LINE#         131
+  C:14B8H         LINE#         132
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 11
+
+
+  C:14B8H         LINE#         133
+  C:14E6H         LINE#         134
+  C:14E6H         LINE#         135
+  C:14EAH         LINE#         136
+  C:150CH         LINE#         137
+  C:151FH         LINE#         138
+  C:151FH         LINE#         139
+  C:1523H         LINE#         140
+  C:1527H         LINE#         141
   -------         ENDPROC       _BUBBLE
   -------         PROC          _AVERAGE
   D:005AH         SYMBOL        array
@@ -590,19 +621,16 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:0063H         SYMBOL        count
   D:0067H         SYMBOL        i
   -------         ENDDO         
-  C:12FFH         LINE#         144
-  C:1307H         LINE#         145
-  C:1307H         LINE#         146
-  C:131DH         LINE#         148
-  C:133FH         LINE#         149
-  C:133FH         LINE#         150
-  C:137EH         LINE#         151
-  C:13D7H         LINE#         152
-  C:13E2H         LINE#         153
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 11
-
-
-  C:13EAH         LINE#         154
+  C:12FBH         LINE#         144
+  C:1303H         LINE#         145
+  C:1303H         LINE#         146
+  C:1319H         LINE#         148
+  C:133BH         LINE#         149
+  C:133BH         LINE#         150
+  C:137AH         LINE#         151
+  C:13D3H         LINE#         152
+  C:13DEH         LINE#         153
+  C:13E6H         LINE#         154
   -------         ENDPROC       _AVERAGE
   -------         PROC          AD_SHOW
   C:0CD9H         LINE#         157
@@ -631,77 +659,134 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   D:0004H         SYMBOL        tmp
   D:001CH         SYMBOL        R2
   -------         ENDDO         
-  C:1645H         LINE#         199
-  C:164DH         LINE#         200
-  C:164DH         LINE#         202
-  C:1683H         LINE#         203
-  C:169EH         LINE#         204
-  C:16BDH         LINE#         205
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 12
+
+
+  C:1641H         LINE#         194
+  C:1649H         LINE#         195
+  C:1649H         LINE#         197
+  C:167FH         LINE#         198
+  C:169AH         LINE#         199
+  C:16B9H         LINE#         200
   -------         ENDPROC       _XPD
+  -------         PROC          SWIT
+  -------         DO            
+  D:0007H         SYMBOL        te
+  -------         ENDDO         
+  C:18DCH         LINE#         202
+  C:18DCH         LINE#         203
+  C:18DCH         LINE#         204
+  C:18DEH         LINE#         205
+  C:18E3H         LINE#         206
+  C:18E8H         LINE#         207
+  C:18EDH         LINE#         208
+  C:18F2H         LINE#         209
+  C:18F7H         LINE#         210
+  C:18F7H         LINE#         211
+  -------         ENDPROC       SWIT
+  -------         PROC          ZDINIT
+  C:1911H         LINE#         214
+  C:1911H         LINE#         215
+  C:1911H         LINE#         216
+  C:1914H         LINE#         217
+  C:1917H         LINE#         218
+  C:191AH         LINE#         219
+  C:191DH         LINE#         220
+  C:191FH         LINE#         221
+  C:1921H         LINE#         222
+  C:1923H         LINE#         223
+  -------         ENDPROC       ZDINIT
+  -------         PROC          SYSTEMINIT
+  C:17BFH         LINE#         225
+  C:17BFH         LINE#         226
+  C:17BFH         LINE#         227
+  C:17C2H         LINE#         228
+  C:17C5H         LINE#         229
+  C:17C9H         LINE#         230
+  C:17CCH         LINE#         231
+  C:17CFH         LINE#         232
+  C:17D4H         LINE#         233
+  C:17E5H         LINE#         234
+  C:17F7H         LINE#         235
+  -------         ENDPROC       SYSTEMINIT
+  -------         PROC          SYSTEMRUN
+  -------         DO            
+  D:004DH         SYMBOL        test
+  D:0005H         SYMBOL        swvalue
+  -------         ENDDO         
+  C:1809H         LINE#         238
+  C:1809H         LINE#         239
+  C:1809H         LINE#         240
+  C:180DH         LINE#         241
+  C:1811H         LINE#         242
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 13
+
+
+  C:1811H         LINE#         243
+  C:1814H         LINE#         244
+  C:1819H         LINE#         245
+  C:181DH         LINE#         246
+  C:181DH         LINE#         247
+  C:1829H         LINE#         248
+  C:1829H         LINE#         249
+  C:1829H         LINE#         250
+  C:1834H         LINE#         251
+  C:1839H         LINE#         252
+  C:1842H         LINE#         253
+  C:1842H         LINE#         255
+  C:1842H         LINE#         256
+  C:1849H         LINE#         257
+  C:1852H         LINE#         261
+  -------         ENDPROC       SYSTEMRUN
   -------         PROC          ZD1
   -------         DO            
   D:0059H         SYMBOL        i
   -------         ENDDO         
-  C:11B9H         LINE#         208
-  C:11D6H         LINE#         210
-  C:11D9H         LINE#         211
-  C:11DCH         LINE#         212
-  C:11DFH         LINE#         213
-  C:11E7H         LINE#         214
-  C:11E9H         LINE#         215
-  C:11EEH         LINE#         216
-  C:11EEH         LINE#         217
-  C:11F1H         LINE#         218
-  C:1212H         LINE#         219
-  C:1214H         LINE#         220
-  C:1214H         LINE#         221
-  C:121EH         LINE#         223
-  C:1227H         LINE#         224
-  C:1227H         LINE#         225
-  C:1229H         LINE#         226
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 12
-
-
-  C:122BH         LINE#         227
-  C:122BH         LINE#         228
-  C:1240H         LINE#         229
-  C:1264H         LINE#         230
-  C:129CH         LINE#         231
-  C:12A5H         LINE#         232
-  C:12A5H         LINE#         233
-  C:12B1H         LINE#         234
-  C:12B1H         LINE#         235
-  C:12B3H         LINE#         236
-  C:12B7H         LINE#         237
-  C:12BBH         LINE#         238
-  C:12BFH         LINE#         239
-  C:12DAH         LINE#         240
-  C:12DCH         LINE#         241
-  C:12E4H         LINE#         242
-  C:12E4H         LINE#         243
+  C:11B9H         LINE#         264
+  C:11D6H         LINE#         266
+  C:11D9H         LINE#         267
+  C:11DCH         LINE#         268
+  C:11DFH         LINE#         269
+  C:11E7H         LINE#         270
+  C:11E9H         LINE#         271
+  C:11EEH         LINE#         272
+  C:11EEH         LINE#         273
+  C:11F1H         LINE#         274
+  C:1212H         LINE#         275
+  C:1214H         LINE#         276
+  C:1214H         LINE#         277
+  C:121EH         LINE#         279
+  C:1227H         LINE#         280
+  C:1227H         LINE#         281
+  C:1229H         LINE#         282
+  C:122BH         LINE#         283
+  C:122BH         LINE#         284
+  C:1240H         LINE#         285
+  C:1264H         LINE#         286
+  C:129CH         LINE#         287
+  C:12A5H         LINE#         288
+  C:12A5H         LINE#         289
+  C:12B1H         LINE#         290
+  C:12B1H         LINE#         291
+  C:12B3H         LINE#         292
+  C:12B7H         LINE#         293
+  C:12BBH         LINE#         294
+  C:12D6H         LINE#         295
+  C:12D8H         LINE#         296
+  C:12E0H         LINE#         297
+  C:12E0H         LINE#         298
   -------         ENDPROC       ZD1
   -------         PROC          MAIN
-  -------         DO            
-  B:0020H.1       SYMBOL        ocpbuff
-  -------         ENDDO         
-  C:1726H         LINE#         245
-  C:1726H         LINE#         246
-  C:1726H         LINE#         247
-  C:1728H         LINE#         248
-  C:172BH         LINE#         249
-  C:172EH         LINE#         250
-  C:1731H         LINE#         251
-  C:1733H         LINE#         252
-  C:1735H         LINE#         254
-  C:1738H         LINE#         255
-  C:173BH         LINE#         256
-  C:1740H         LINE#         259
-  C:1751H         LINE#         260
-  C:1763H         LINE#         261
-  C:1775H         LINE#         262
-  C:1779H         LINE#         264
-  C:1779H         LINE#         265
-  C:1779H         LINE#         267
+  C:0003H         LINE#         300
+  C:0003H         LINE#         301
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 14
+
+
+  C:0003H         LINE#         302
+  C:0006H         LINE#         303
+  C:0006H         LINE#         304
+  C:0006H         LINE#         305
+  C:0009H         LINE#         306
   -------         ENDPROC       MAIN
   -------         ENDMOD        TLC2543
 
@@ -719,9 +804,6 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   -------         ENDMOD        ?C?FPDIV
 
   -------         MODULE        ?C?FPCMP
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 13
-
-
   C:095BH         PUBLIC        ?C?FPCMP
   C:0959H         PUBLIC        ?C?FPCMP3
   -------         ENDMOD        ?C?FPCMP
@@ -757,6 +839,9 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   -------         ENDMOD        ?C?ILDOPTR
 
   -------         MODULE        ?C?ISTOPTR
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:33:52  PAGE 15
+
+
   C:0C6DH         PUBLIC        ?C?ISTOPTR
   -------         ENDMOD        ?C?ISTOPTR
 
@@ -779,15 +864,9 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
   -------         MODULE        ?C?OFFXADD
   C:0CCDH         PUBLIC        ?C?OFFXADD
   -------         ENDMOD        ?C?OFFXADD
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/29/2016  10:07:42  PAGE 14
-
-
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_X9C10RUN?TLC2543
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_DELAY?TLC2543
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?AD_SHOW?TLC2543
@@ -795,5 +874,14 @@ SYMBOL TABLE OF MODULE:  circuit (?C_STARTUP)
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_XPD?TLC2543
 
-Program Size: data=105.2 xdata=100 code=6333
-LINK/LOCATE RUN COMPLETE.  4 WARNING(S),  0 ERROR(S)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  VAD_SHOW
+    MODULE:  TLC2543.obj (TLC2543)
+    ADDRESS: 1812H
+
+Program Size: data=105.1 xdata=100 code=6447
+LINK/LOCATE RUN COMPLETE.  5 WARNING(S),  0 ERROR(S)
