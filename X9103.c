@@ -9,6 +9,32 @@ uchar mmdz102=0,mmdz103=0;
 *dat : 要走的量程 number
 *例如： x9c103(0,0,50)  选中102 往前走 50个量程（500欧姆）
 */
+
+
+
+void x9cc(uchar bin,fx,dat)
+{
+	uchar m = 0;
+	X9C103_INC = 1;
+	if(bin)X9C103_CS = 0;
+		else X9C102_CS = 0;
+	X9C103_UD = fx;
+	_nop_();
+	for(m = 0;m < dat;m++)
+	{
+		X9C103_INC = 0;
+		_nop_();
+		_nop_();
+		X9C103_INC = 1;
+	//	if(bin)X9C103_UD ? mmdz103-- : mmdz103++;
+		//S	else X9C103_UD ? mmdz102-- : mmdz102++;
+	}
+	if(bin)X9C103_CS = 1;
+		else X9C102_CS = 1;
+}
+
+
+
 void x9c10(uchar bin,fx,dat)
 {
 	uchar m = 0;
@@ -46,7 +72,7 @@ void x9c10Run(uchar bin,dat)
 void x9cInit()
 {
 	x9c10(0,1,100);x9c10(1,1,100);//初始化x9013
-	mmdz102 = 9;mmdz103=0; 
+	mmdz102 = 1;mmdz103=1; 
 }
 
 /*
