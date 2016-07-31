@@ -6,12 +6,19 @@
 
 #include "x9103.c"
 
+sbit s1 = P1^3;
+sbit s2 = P1^4;
+sbit s3 = P1^5;
+sbit s4 = P1^6;
+sbit s5 = P1^7;
+
+
 /****************************************
 *五路AD： 分别采样10次，
 *IN0:输入电压、
 *IN1:输出电压、
-*IN2、IN3:输出电流（1，2 ）、
-*IN4:负载识别
+*IN3、IN3:输出电流（1）、
+*IN4:负载识别	  电阻
 ********************************************/
 unsigned int xdata AD_[5][10] = 0;
 double temp[5] = 0;
@@ -159,34 +166,39 @@ void ad_show()
 
 	/**********************输入电压**********************************/
 		lcd_putnumstr(64,0,0,AD_num[0]/10000);
-		Lcd12864_Write16CnCHAR(72,0,0,".");
-		lcd_putnumstr(80,0,0,AD_num[0]%10000/1000);
+		lcd_putnumstr(72,0,0,AD_num[0]%10000/1000);
+		Lcd12864_Write16CnCHAR(80,0,0,".");
 		lcd_putnumstr(88,0,0,AD_num[0]%10000%1000/100);
-
-    /******************************输出电压****************************/
-		lcd_putnumstr(64,2,0,AD_num[2]/10000);
-		Lcd12864_Write16CnCHAR(72,2,0,".");
-		lcd_putnumstr(80,2,0,AD_num[2]%10000/1000);
-		lcd_putnumstr(88,2,0,AD_num[2]%10000%1000/100);
+		lcd_putnumstr(96,0,0,AD_num[0]%10000%1000%100/10);
 
     /******************************输出电流****************************/
-		lcd_putnumstr(64,4,0,AD_num[3]/10000);
-		Lcd12864_Write16CnCHAR(72,4,0,".");
-		lcd_putnumstr(80,4,0,AD_num[3]%10000/1000);
-		lcd_putnumstr(88,4,0,AD_num[3]%10000%1000/100);
+		lcd_putnumstr(64,2,0,AD_num[1]/1000);
+		Lcd12864_Write16CnCHAR(72,2,0,".");
+		lcd_putnumstr(80,2,0,AD_num[1]%1000/100);
+		lcd_putnumstr(88,2,0,AD_num[1]%1000%100/10);
 
+    /******************************输出电压****************************/
+		lcd_putnumstr(64,4,0,AD_num[3]/1000);
+		Lcd12864_Write16CnCHAR(72,4,0,".");
+		lcd_putnumstr(80,4,0,AD_num[3]%1000/100);
+		lcd_putnumstr(88,4,0,AD_num[3]%1000%100/10);
 
 		if(load)
 		{
-			Lcd12864_Write16CnCHAR(0,6,0,"OCP:     R:   ");
+			
 			lcd_putnumstr(40,6,0,ocp/10);
 			Lcd12864_Write16CnCHAR(48,6,0,".");
 			lcd_putnumstr(56,6,0,ocp%10);
+
+			lcd_putnumstr(88,6,0,AD_num[4]/1000);
+			lcd_putnumstr(96,6,0,AD_num[4]%1000/100);
+			lcd_putnumstr(104,6,0,AD_num[4]%1000%100/10);
+			lcd_putnumstr(112,6,0,AD_num[4]%1000%100%10);
 		}
 		else if(!load) 
 		{
     /******************************过流保护****************************/
-			Lcd12864_Write16CnCHAR(0,6,0,"OCP  :      ");
+			
 			lcd_putnumstr(56,6,0,ocp/10);
 			Lcd12864_Write16CnCHAR(64,6,0,".");
 			lcd_putnumstr(72,6,0,ocp%10);	
@@ -196,13 +208,13 @@ void ad_show()
 uchar x9c = 0;
 
 
-uint xpd(double value)
+double JRvalue(double value)
 {
- 	static const Vcc = 3.0 , R1 = 1000;
-	double tmp = (Vcc - value)/R1;
-	double R2 = value / tmp;
-	return ((R2 + 50)/10);
-}
+	double Iz = value / 1000.0;
+	double Jr = (3.00 - value)/Iz;
+	return Jr;
+}						   
+	
 
 uchar swit()
 {
@@ -230,19 +242,20 @@ void zdInit()
 void systemInit()
 {
 	zdInit();
-	P4SW = 0xf0;
-	x9cInit();  //
+	P4SW = 0x70;
+//	x9cInit();  //
 	Lcd12864_Init();
 	Lcd12864_ClearScreen(0x00);//12864清屏
-	Lcd12864_Write16CnCHAR(0,0,0,"inV  : ");
-	Lcd12864_Write16CnCHAR(0,2,0,"outV : ");
-	Lcd12864_Write16CnCHAR(0,4,0,"outA : ");
+	Lcd12864_Write16CnCHAR(0,0,0,"Uin  :        V");
+	Lcd12864_Write16CnCHAR(0,2,0,"Iout :        A");
+	Lcd12864_Write16CnCHAR(0,4,0,"Uout :        V");
 	ocpOff;
 }
 
 void systemRun()
 {
   uchar test = 0,swvalue = 0;
+  Lcd12864_Write16CnCHAR(0,6,0,"OCP  :      ");
   while(test == 0)
   {
   	  ad_show();
@@ -251,18 +264,59 @@ void systemRun()
 	  {
 	  	 switch(swvalue)
 		 {
-		 	 case 1 : break;
-			 case 2 : if(ocp < 40)ocp += 1; break;
-			 case 3 : ocp = 30;break;
-			 case 4 : if(ocp > 5)ocp -= 1;break;
-			 case 5 : load = ~load;LED2 = 1;break;
+		 	 case 1 : x9cc(1,0,1);break;
+			 case 2 : x9cc(1,1,1);break;
+			 case 3 : if(ocp < 40)ocp += 1;x9cc(0,0,1);break;
+			 case 4 : if(ocp > 5)ocp -= 1;x9cc(0,1,1);break;
+			 case 5 : 
+			 		load = ~load;LED2 = 1;
+			 		Lcd12864_Write16CnCHAR(0,6,0,"               ");
+					Lcd12864_Write16CnCHAR(0,6,0,"OCP:     R:   ");
+			 		test = 1;
+			 			break;
+					default:break;
 			 
 		 }
 		 delay(5000);
 		 while(swit() != 0xff);
-	  }
+	  }	
+  }
+  while(test == 1)
+  {
+  	  ad_show();
+  	  swvalue = swit();
+	  if(swvalue != 0xff)
+	  {
+	  	 switch(swvalue)
+		 {
+		 	 case 1 : break;
+			 case 2 :  break;
+			 case 3 : if(ocp < 40)ocp += 1;;break;
+			 case 4 : if(ocp > 5)ocp -= 1;break;
+			 case 5 : 
+			 		load = ~load;LED2 = 1;
+			 		Lcd12864_Write16CnCHAR(0,6,0,"               ");
+					Lcd12864_Write16CnCHAR(0,6,0,"OCP  :      ");
+			 		test = 0;
+			 			break;
+					default:break;
+			 
+		 }
+		 delay(5000);
+		 while(swit() != 0xff);
+	  }	
   }
 
+}
+
+uchar sw()
+{
+	uchar te = 0xff;
+	if(s1 == 0)te = 1;
+	if(s2 == 0)te = 2;
+	if(s3 == 0)te = 3;
+	if(s4 == 0)te = 4;
+	return te;
 }
 
 
@@ -288,10 +342,17 @@ void zd1() interrupt 1
 		{
 			bubble(AD_[i],10);            //冒泡
 			temp[i]  = Average(AD_[i],1,9); //平均值
-			temp[i] = (temp[i] * addTcl2543) *10000;		
+		                	//输入电压
+			 if(i == 0){temp[i] = ((temp[i] * 6.0) * addTcl2543) *1000;}
+			 else if(i == 1){temp[i] = (((temp[i] * 2.0) * addTcl2543) *1000.0);}
+			 else if(i == 3){temp[i] = (((temp[i] * 2.0) * addTcl2543) *1000.0);}
+			 else if(i == 4) {
+				temp[i] = (temp[i] * addTcl2543);
+			 	temp[i] = JRvalue(temp[i]);
+				}			
 		}
 	}
-	if(e == 1000) //1s 输出一次
+	if(e == 5000) //1s 输出一次
 	{
 		d2buff = ~d2buff;
 		if(!load)LED2 = d2buff;
@@ -305,8 +366,14 @@ void zd1() interrupt 1
 void main()
 {
 	systemInit();
+//	x9cInit();  //	    
 	while(1)
 	{
+			
 		systemRun();
+	//	ad_show();
 	}
 }
+
+
+
