@@ -13,11 +13,11 @@
 #define ocpOn {ocpio = 0;ocpio = 1;}
 
 sbit LED2 = P3^6;
-sbit sw1 = P5^1;
-sbit sw2 = P5^0;
-sbit sw3 = P2^4;
-sbit sw4 = P2^3;
-sbit sw5 = P3^7;
+sbit sw1 = P1^3;
+sbit sw2 = P1^4;
+sbit sw3 = P1^5;
+sbit sw4 = P1^6;
+sbit sw5 = P1^7;
 
 
 sbit ocpio = P2^2;
@@ -27,7 +27,7 @@ uint readAD(uchar chunnel);
 void bubble(unsigned int* array,uchar len);
 double Average(unsigned int *array,unsigned char index,unsigned char len);
 void ad_show();
-uint xpd(double value);
+double JRvalue(double value);
 uchar swit();
 void zdInit();
 void system_Init();
