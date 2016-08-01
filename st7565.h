@@ -29,5 +29,7 @@ void LcdSt7565_Write(uchar cmd,at,dat);
 void Lcd12864_Init();
 void Lcd12864_ClearScreen(uchar temp);
 uchar Lcd12864_Write16CnCHAR(uchar x, uchar y, at, uchar *cn);
+uchar lcd_putnumstr(uchar x,y,at,uint num);
+
 
 #endif
