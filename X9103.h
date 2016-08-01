@@ -3,12 +3,18 @@
 #define __X9103_H_
 /******************************************************************************/
 
+
+#include<stc12c5a.h>
+
+
 sbit X9C103_CS = P2^3;
 sbit X9C102_CS = P2^2;
 sbit X9C103_INC = P2^0;
 sbit X9C103_UD = P2^1;
 
-
+void x9cc(uchar bin,fx,dat);
+void x9c10(uchar bin,fx,dat);
+void x9c10Run(uchar bin,dat);
 
 /******************************************************************************/
 #endif

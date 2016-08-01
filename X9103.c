@@ -26,8 +26,8 @@ void x9cc(uchar bin,fx,dat)
 		_nop_();
 		_nop_();
 		X9C103_INC = 1;
-	//	if(bin)X9C103_UD ? mmdz103-- : mmdz103++;
-		//S	else X9C103_UD ? mmdz102-- : mmdz102++;
+		if(bin)X9C103_UD ? mmdz103-- : mmdz103++;
+			else X9C103_UD ? mmdz102-- : mmdz102++;
 	}
 	if(bin)X9C103_CS = 1;
 		else X9C102_CS = 1;
