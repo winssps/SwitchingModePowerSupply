@@ -9,18 +9,19 @@
 #define addo 5.0000/1023.0000
 #define addTcl2543 3.0000/4095.0000
 
-#define ocpOff {ocpio = 0;ocpio = 0;}
-#define ocpOn {ocpio = 0;ocpio = 1;}
+#define ocpOff ocpIo = 0
+#define ocpOn ocpIo = 1
 
-sbit LED2 = P3^6;
+sbit LED2 = P3^7;
 sbit sw1 = P1^3;
 sbit sw2 = P1^4;
 sbit sw3 = P1^5;
 sbit sw4 = P1^6;
 sbit sw5 = P1^7;
+sbit ocpIo = P3^6;
 
 
-sbit ocpio = P2^2;
+
 
 void delay(uint t);
 uint readAD(uchar chunnel);
